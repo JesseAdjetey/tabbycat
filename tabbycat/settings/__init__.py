@@ -2,8 +2,7 @@ import os
 import logging
 import sys
 
-from split_settings.tools import optional, include
-
+from split_settings.tools import include
 
 root = logging.getLogger()
 root.setLevel(logging.DEBUG)
@@ -13,9 +12,9 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 root.addHandler(ch)
 
-# ==============================================================================
-# Environments
-# ==============================================================================
+# ==============================================================================  
+# Environments  
+# ==============================================================================  
 
 base_settings = [
     'core.py',
@@ -34,11 +33,6 @@ elif os.environ.get('ON_RENDER', ''):
     base_settings.append('render.py')
     root.info('SPLIT_SETTINGS: imported render.py')
 else:
-    base_settings.append('local.py')
-    if os.environ.get('LOCAL_DEVELOPMENT', ''):
-        base_settings.append('development.py')
-        root.info('SPLIT_SETTINGS: imported local.py & development.py')
-    else:
-        root.info('SPLIT_SETTINGS: imported local.py')
+    root.info('SPLIT_SETTINGS: Running without a specific environment file.')
 
 include(*base_settings)
